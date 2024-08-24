@@ -1,0 +1,32 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Microscope, Stethoscope, Syringe, Dna } from "lucide-react"
+
+const services = [
+  { name: "Blood Tests", description: "Comprehensive blood analysis", icon: Microscope },
+  { name: "X-Ray", description: "Digital X-ray imaging", icon: Stethoscope },
+  { name: "Ultrasound", description: "High-resolution ultrasound scans", icon: Syringe },
+  { name: "MRI", description: "Magnetic Resonance Imaging", icon: Dna },
+]
+
+export function Services() {
+  return (
+    <section id="services" className="my-8">
+      <h2 className="text-3xl font-bold mb-4">Our Services</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {services.map((service) => (
+          <Card key={service.name}>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <service.icon className="h-6 w-6" />
+                <span>{service.name}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription>{service.description}</CardDescription>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </section>
+  )
+}
