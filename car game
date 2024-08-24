@@ -1,0 +1,120 @@
+use client"
+
+import { useState, useEffect, useCallback } from 'react'
+import { Button } from "@/components/ui/button"
+import { Car, Square } from 'lucide-react'
+
+export default function Component() {
+  const [carPosition, setCarPosition] = useState(50)
+  const [obstacles, setObstacles] = useState([])
+  const [score, setScore] = useState(0)
+  const [gameOver, setGameOver] = useState(false)
+
+  const moveLeft = () => {
+    if (carPosition > 0) setCarPosition(prev => prev - 10)
+  }
+
+  const moveRight = () => {
+    if (carPosition < 90) setCarPosition(prev => prev + 10)
+  }
+
+  const createObstacle = useCallback(() => {
+    const newObstacle = {
+      id: Math.random(),
+      position: Math.floor(Math.random() * 90),
+      top: -10
+    }
+    setObstacles(prev => [...prev, newObstacle])
+  }, [])
+
+  const moveObstacles = useCallback(() => {
+    setObstacles(prev => 
+      prev.map(obs => ({...obs, top: obs.top + 5}))
+        .filter(obs => obs.top < 100)
+    )
+  }, [])
+
+  const checkCollision = useCallback(() => {
+    obstacles.forEach(obs => {
+      if (obs.top > 80 && obs.top < 100 && 
+          Math.abs(obs.position - carPosition) < 10) {
+        setGameOver(true)
+      }
+    })
+  }, [obstacles, carPosition])
+
+  useEffect(() => {
+    if (gameOver) return
+
+    const gameLoop = setInterval(() => {
+      moveObstacles()
+      checkCollision()
+      setScore(prev => prev + 1)
+    }, 100)
+
+    const obstacleInterval = setInterval(createObstacle, 2000)
+
+    return () => {
+      clearInterval(gameLoop)
+      clearInterval(obstacleInterval)
+    }
+  }, [gameOver, moveObstacles, checkCollision, createObstacle])
+
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') moveLeft()
+    if (e.key === 'ArrowRight') moveRight()
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [handleKeyDown])
+
+  const restartGame = () => {
+    setCarPosition(50)
+    setObstacles([])
+    setScore(0)
+    setGameOver(false)
+  }
+
+  return (
+    <div className="w-full max-w-md mx-auto p-4">
+      <div className="relative w-full h-96 bg-gray-200 overflow-hidden">
+        {!gameOver ? (
+          <>
+            <div 
+              className="absolute bottom-4 w-10 h-10 transition-all duration-100"
+              style={{ left: ${carPosition}% }}
+            >
+              <Car className="w-full h-full text-blue-500" />
+            </div>
+            {obstacles.map(obs => (
+              <div 
+                key={obs.id}
+                className="absolute w-8 h-8"
+                style={{ left: ${obs.position}%, top: ${obs.top}% }}
+              >
+                <Square className="w-full h-full text-red-500" />
+              </div>
+            ))}
+          </>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="text-white text-center">
+              <h2 className="text-2xl font-bold mb-4">Game Over</h2>
+              <p className="mb-4">Your score: {score}</p>
+              <Button onClick={restartGame}>Restart</Button>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="mt-4 flex justify-between items-center">
+        <div>Score: {score}</div>
+        <div className="space-x-2">
+          <Button onClick={moveLeft}>Left</Button>
+          <Button onClick={moveRight}>Right</Button>
+        </div>
+      </div>
+    </div>
+  )
+}
