@@ -1,0 +1,64 @@
+import { useState } from 'react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { 
+  LayoutDashboard, 
+  Users, 
+  Building2, 
+  Briefcase, 
+  Menu,
+  Search
+} from "lucide-react"
+import Link from 'next/link'
+
+export default function Layout({ children }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className={bg-white w-64 p-6 ${isSidebarOpen ? '' : 'hidden'}}>
+        <h1 className="text-2xl font-bold mb-6">CompanyMS</h1>
+        <nav>
+          <Link href="/" className="flex items-center mb-4 text-gray-700 hover:text-gray-900">
+            <LayoutDashboard className="mr-2" />
+            Dashboard
+          </Link>
+          <Link href="/employees" className="flex items-center mb-4 text-gray-700 hover:text-gray-900">
+            <Users className="mr-2" />
+            Employees
+          </Link>
+          <Link href="/departments" className="flex items-center mb-4 text-gray-700 hover:text-gray-900">
+            <Building2 className="mr-2" />
+            Departments
+          </Link>
+          <Link href="/projects" className="flex items-center mb-4 text-gray-700 hover:text-gray-900">
+            <Briefcase className="mr-2" />
+            Projects
+          </Link>
+        </nav>
+      </div>
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top bar */}
+        <header className="bg-white border-b flex items-center justify-between p-4">
+          <Button variant="ghost" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+            <Menu />
+          </Button>
+          <div className="flex items-center">
+            <Input type="text" placeholder="Search..." className="mr-2" />
+            <Button variant="ghost">
+              <Search />
+            </Button>
+          </div>
+        </header>
+
+        {/* Page content */}
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
+          {children}
+        </main>
+      </div>
+    </div>
+  )
+}
