@@ -81,3 +81,106 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+----------------------------------
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    padding: 2rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+label {
+    margin-bottom: 0.5rem;
+}
+
+input {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    padding: 0.5rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 1rem;
+}
+----------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    // Handle patient registration
+    document.getElementById('registrationForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        alert('Patient Registered Successfully');
+        // Add functionality to save patient data
+    });
+
+    // Handle appointment scheduling
+    document.getElementById('appointmentForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        alert('Appointment Scheduled');
+        // Add functionality to save appointment data
+    });
+
+    // Handle test ordering
+    document.getElementById('orderForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        alert('Test Ordered');
+        // Add functionality to save test order data
+    });
+
+    // Handle viewing results
+    document.getElementById('resultsForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const patientId = document.getElementById('resultsPatientId').value;
+        // Simulate fetching results
+        document.getElementById('resultsDisplay').innerHTML = <p>Results for Patient ID ${patientId} will be displayed here.</p>;
+    });
+});
