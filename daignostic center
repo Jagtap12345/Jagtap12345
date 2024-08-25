@@ -1,32 +1,83 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Microscope, Stethoscope, Syringe, Dna } from "lucide-react"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnostic Center Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Diagnostic Center</h1>
+        <nav>
+            <ul>
+                <li><a href="#register">Register Patient</a></li>
+                <li><a href="#appointments">Schedule Appointment</a></li>
+                <li><a href="#order">Order Test</a></li>
+                <li><a href="#results">View Results</a></li>
+            </ul>
+        </nav>
+    </header>
 
-const services = [
-  { name: "Blood Tests", description: "Comprehensive blood analysis", icon: Microscope },
-  { name: "X-Ray", description: "Digital X-ray imaging", icon: Stethoscope },
-  { name: "Ultrasound", description: "High-resolution ultrasound scans", icon: Syringe },
-  { name: "MRI", description: "Magnetic Resonance Imaging", icon: Dna },
-]
+    <main>
+        <section id="register">
+            <h2>Register Patient</h2>
+            <form id="registrationForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+                
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                
+                <button type="submit">Register</button>
+            </form>
+        </section>
 
-export function Services() {
-  return (
-    <section id="services" className="my-8">
-      <h2 className="text-3xl font-bold mb-4">Our Services</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {services.map((service) => (
-          <Card key={service.name}>
-            <CardHeader>
-              <CardTitle className="flex items-center space-x-2">
-                <service.icon className="h-6 w-6" />
-                <span>{service.name}</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CardDescription>{service.description}</CardDescription>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
-  )
-}
+        <section id="appointments">
+            <h2>Schedule Appointment</h2>
+            <form id="appointmentForm">
+                <label for="patientId">Patient ID:</label>
+                <input type="text" id="patientId" name="patientId" required>
+                
+                <label for="date">Appointment Date:</label>
+                <input type="date" id="date" name="date" required>
+                
+                <button type="submit">Schedule</button>
+            </form>
+        </section>
+
+        <section id="order">
+            <h2>Order Test</h2>
+            <form id="orderForm">
+                <label for="patientId">Patient ID:</label>
+                <input type="text" id="orderPatientId" name="patientId" required>
+                
+                <label for="testType">Test Type:</label>
+                <input type="text" id="testType" name="testType" required>
+                
+                <button type="submit">Order</button>
+            </form>
+        </section>
+
+        <section id="results">
+            <h2>View Results</h2>
+            <form id="resultsForm">
+                <label for="patientId">Patient ID:</label>
+                <input type="text" id="resultsPatientId" name="patientId" required>
+                
+                <button type="submit">Get Results</button>
+            </form>
+            <div id="resultsDisplay"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Diagnostic Center. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
